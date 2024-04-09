@@ -1,3 +1,8 @@
+import database.studente_DAO
+import database.corso_DAO
 class Model:
-    def __init__(self):
-        pass
+    def getCorsi(self):
+        return database.corso_DAO.getCorsi()
+    def getStudenti(self):
+        return database.studente_DAO.getStudente()
+
