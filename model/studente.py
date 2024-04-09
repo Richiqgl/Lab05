@@ -7,7 +7,7 @@ class Studente:
     cds:int
 
     def __str__(self):
-        return f"matricola {self.matricola} - nome: {self.nome} - cognome: {self.cognome} cds{self.cds}"
+        return f"matricola {self.matricola} - nome: {self.nome} - cognome: {self.cognome} cds {self.cds}"
     def __eq__(self, other):
         return self.matricola == other.matricola
 

@@ -26,7 +26,7 @@ class View(ft.UserControl):
 
         #ROW with some controls
         # text field for the name
-        self.txt_name = ft.Dropdown(options=[])
+        self.txt_name = ft.Dropdown(options=[],width=640)
         self._controller.popola_tendina()
             #label="name",
             #width=200,
@@ -34,7 +34,7 @@ class View(ft.UserControl):
 
 
         # button for the "hello" reply
-        self.btn_cerca = ft.ElevatedButton(text="Cerca iscritti", on_click=self._controller.cercaIscritti)
+        self.btn_cerca = ft.ElevatedButton(text="Cerca iscritti", on_click=self._controller.cercaIscrizione)
         row1 = ft.Row([self.txt_name, self.btn_cerca],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
@@ -46,8 +46,8 @@ class View(ft.UserControl):
         self._page.controls.append(row2)
 
         #row3
-        self._btncercaStudente=ft.ElevatedButton(text="Cerca Studente")#,on_click=self._controller.cercaIscritto)
-        self._btncercacorsi=ft.ElevatedButton(text="Cerca corsi")#,on_click=self._controller.cercaCorsi)
+        self._btncercaStudente=ft.ElevatedButton(text="Cerca Studente",on_click=self._controller.cercaMatricola)
+        self._btncercacorsi=ft.ElevatedButton(text="Cerca corsi",on_click=self._controller.cercaCorsi)
         self.btnIscrivi=ft.ElevatedButton(text="Iscrivi")#,on_click=self._controller.iscrivi)
         row3=ft.Row([self._btncercaStudente,self._btncercacorsi,self.btnIscrivi],alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row3)
