@@ -38,6 +38,7 @@ class View(ft.UserControl):
         row1 = ft.Row([self.txt_name, self.btn_cerca],
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
+
         #riga 2
         self._matricola =ft.TextField(label="matricola",disabled=False,width=240)
         self._nome=ft.TextField(label="nome",disabled=False,width=240)

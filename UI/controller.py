@@ -125,6 +125,8 @@ class Controller:
             except mysql.connector.Error as err:
                 print(err)
                 return
+        else:
+            self._view.create_alert("Matricola inesistente")
 
     """ Costruisce una funzione che inserisce ad una matricola inserita nel database l'iscrizione ad un corso 
     inserito nel database
@@ -132,7 +134,7 @@ class Controller:
     def iscrivi(self,e):
         codice_corso=self._view.txt_name.value
         print(codice_corso)
-        matricolaCercata=int(self._view._matricola.value)
+        matricolaCercata=self._view._matricola.value
         if codice_corso is not None and matricolaCercata is not None:
             try:
                 cnx = get_connection()
@@ -140,7 +142,7 @@ class Controller:
                 query = """INSERT INTO iscrizione
                             (matricola, codins)
                             VALUES (%s, %s)"""
-                cursor.execute(query, (matricolaCercata,codice_corso,))
+                cursor.execute(query, (int(matricolaCercata),codice_corso,))
                 cnx.commit()
                 cursor.close()
                 cnx.close()
@@ -150,9 +152,7 @@ class Controller:
                 print(err)
                 return
         else:
-            dlg = ft.AlertDialog(title=ft.Text("Errore parametro mancante"), open=True)
-            self._view._page.dialog = dlg
-            self._view.update_page()
+            self._view.create_alert("Errore parametro mancante")
             return None
 
 
