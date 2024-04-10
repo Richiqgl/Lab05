@@ -12,8 +12,8 @@ def getCorsi():
         result = []
         for row in cursor:
             result.append(Corso(row["codins"],
-                                  row["nome"],
                                   row["crediti"],
+                                  row["nome"],
                                 row["pd"]))
         cursor.close()
         cnx.close()

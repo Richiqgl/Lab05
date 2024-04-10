@@ -1,6 +1,6 @@
 import flet as ft
 import mysql.connector
-
+import re
 from model.model import Model
 from database.DB_connect import get_connection
 from model.studente import Studente
@@ -27,7 +27,8 @@ class Controller:
     def popola_tendina(self):
         corsi = self._model.getCorsi()
         for corso in corsi:
-            self._view.txt_name.options.append(ft.dropdown.Option(key=corso.codins, text=corso.__str__()))
+            #viene salvato nel value il codice e come testo ma non valore quello in text=
+            self._view.txt_name.options.append(ft.dropdown.Option(key=corso.codins, text=f"{corso.nome} ({corso.codins})"))
         self._view.update_page()
 
 
@@ -38,9 +39,7 @@ class Controller:
     def cercaIscrizione(self,e):
         self._view.txt_result.controls.clear()
         if self._view.txt_name.value is None:
-            dlg=ft.AlertDialog(title=ft.Text("Corso non selezionato"),open=True)
-            self._view._page.dialog=dlg
-            self._view.update_page()
+            self._view.create_alert("Corso non selezionato")
             return
         self._codiceCorso=self._view.txt_name.value
         try:
@@ -83,9 +82,7 @@ class Controller:
             cursor.execute(query, (matricola_cercata,))
             row=cursor.fetchone()
             if row is None:
-                dlg = ft.AlertDialog(title=ft.Text("Matricola non trovata"), open=True)
-                self._view._page.dialog = dlg
-                self._view.update_page()
+                self._view.create_alert("Matricola non trovata")
                 return None
             else:
                 elemento = Studente(row["matricola"],
@@ -102,7 +99,7 @@ class Controller:
             print(err)
             return None
 
-    """ Costruisce una funzione che restituisce i corsi data un amatricola inserita nel database 
+    """ Costruisce una funzione che restituisce i corsi data un ana matricola inserita nel database 
     """
     def cercaCorsi(self,e):
         if self.cercaMatricola(e) == 1:
@@ -129,6 +126,34 @@ class Controller:
                 print(err)
                 return
 
+    """ Costruisce una funzione che inserisce ad una matricola inserita nel database l'iscrizione ad un corso 
+    inserito nel database
+    """
+    def iscrivi(self,e):
+        codice_corso=self._view.txt_name.value
+        print(codice_corso)
+        matricolaCercata=int(self._view._matricola.value)
+        if codice_corso is not None and matricolaCercata is not None:
+            try:
+                cnx = get_connection()
+                cursor = cnx.cursor(dictionary=True)
+                query = """INSERT INTO iscrizione
+                            (matricola, codins)
+                            VALUES (%s, %s)"""
+                cursor.execute(query, (matricolaCercata,codice_corso,))
+                cnx.commit()
+                cursor.close()
+                cnx.close()
+                print("Iscrizione avvenuta")
+                self._view.create_alert("Iscrizione effettuata")
+            except mysql.connector.Error as err:
+                print(err)
+                return
+        else:
+            dlg = ft.AlertDialog(title=ft.Text("Errore parametro mancante"), open=True)
+            self._view._page.dialog = dlg
+            self._view.update_page()
+            return None
 
 
 

@@ -2,7 +2,6 @@
 
 import mysql.connector
 from database.DB_connect import get_connection
-from database.DB_connect import get_connection
 from model.studente import Studente
 def getStudente():
     try:

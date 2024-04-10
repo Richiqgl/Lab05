@@ -15,8 +15,8 @@ class View(ft.UserControl):
         self.txt_name = None
         self.btn_cerca = None
         self._matricola = None
-        self._nome= None
-        self._cognome=None
+        self._nome = None
+        self._cognome = None
 
     def load_interface(self):
         """Function that loads the graphical elements of the view"""
@@ -26,7 +26,7 @@ class View(ft.UserControl):
 
         #ROW with some controls
         # text field for the name
-        self.txt_name = ft.Dropdown(options=[],width=640)
+        self.txt_name = ft.Dropdown(options=[] ,width=640)
         self._controller.popola_tendina()
             #label="name",
             #width=200,
@@ -39,16 +39,16 @@ class View(ft.UserControl):
                       alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)
         #riga 2
-        self._matricola=ft.TextField(label="matricola",disabled=False,width=120)
-        self._nome=ft.TextField(label="nome",disabled=False,width=120)
-        self._cognome=ft.TextField(label="cognome",disabled=False,width=120)
+        self._matricola =ft.TextField(label="matricola",disabled=False,width=240)
+        self._nome=ft.TextField(label="nome",disabled=False,width=240)
+        self._cognome=ft.TextField(label="cognome",disabled=False,width=240)
         row2=ft.Row([self._matricola,self._nome,self._cognome],alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row2)
 
         #row3
         self._btncercaStudente=ft.ElevatedButton(text="Cerca Studente",on_click=self._controller.cercaMatricola)
         self._btncercacorsi=ft.ElevatedButton(text="Cerca corsi",on_click=self._controller.cercaCorsi)
-        self.btnIscrivi=ft.ElevatedButton(text="Iscrivi")#,on_click=self._controller.iscrivi)
+        self.btnIscrivi=ft.ElevatedButton(text="Iscrivi" ,on_click=self._controller.iscrivi)
         row3=ft.Row([self._btncercaStudente,self._btncercacorsi,self.btnIscrivi],alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row3)
 
